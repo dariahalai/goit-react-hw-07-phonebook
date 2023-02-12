@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { nanoid } from 'nanoid';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
-export const contactsInitState = {
+ const contactsInitState = {
   contacts: [],
   isLoading: false,
   error: null,
-  filter:''
 };
 
 const contactsSlice = createSlice({
@@ -12,16 +13,20 @@ const contactsSlice = createSlice({
   initialState: contactsInitState,
   reducers: {
     addNewContacts: (state, { payload }) => {
-      state.contacts.push(payload);
+      const newContact = {
+        id: nanoid(),
+        ...payload,
+      };
+      state.contacts.some(({ name }) => name === payload.name)
+      ? Notify(`${newContact.name} is already in contacts.`)
+      : state.contacts.push(newContact);
     },
     deleteIdContact: (state, { payload }) => {
-      state.contacts = state.contacts.filter(contact => contact.id !== payload);
+      state.contacts = state.contacts.filter(
+        (contact) => contact.id !== payload);
     },
-    filterContacts: (state, { payload }) => {
-      state.filter = payload;
-   },
   },
 });
 
-export const { addNewContacts, deleteIdContact ,filterContacts} = contactsSlice.actions;
-export const rootReducer = contactsSlice.reducer;
+export const { addNewContacts, deleteIdContact } = contactsSlice.actions;
+export const contactsReducer = contactsSlice.reducer;

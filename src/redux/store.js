@@ -1,16 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { contactsInitState, rootReducer } from './contactsSlice';
-// import { filterInitState, filterReducer } from './filterSlice';
-
-
-export const initState = contactsInitState;
-
+import { contactsReducer } from './contactsSlice';
+import { filterReducer } from './filterSlice';
 
 export const store = configureStore({
-  preloadedState: initState,
   devTools: true,
-  reducer:rootReducer
- 
-  
+  reducer: {
+    contacts: contactsReducer,
+    filter: filterReducer,
+  },
 });
-
