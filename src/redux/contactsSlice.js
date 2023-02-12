@@ -6,6 +6,7 @@ import {
   getContactsThunk,
   deleteContactByIdThunk,
 } from './contacts.thunk';
+
 const contactsInitState = {
   contacts: [],
   isLoading: false,
@@ -57,7 +58,7 @@ const contactsSlice = createSlice({
       .addCase(deleteContactByIdThunk.fulfilled, (state, { payload }) => {
         state.isLoading = false;
         state.contacts = state.contacts.filter(
-          contact => contact.id !== payload
+          contact => contact.id !== payload.id
         );
       })
       .addCase(deleteContactByIdThunk.rejected, (state, { payload }) => {
