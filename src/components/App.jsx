@@ -18,8 +18,7 @@ export function App() {
       <Section>
         <Title>Contacts</Title>
         <Filter />
-        {isLoading && !error && <Loader/>}
-        <ContactsList />
+        {isLoading && !error ? <Loader/> :<ContactsList />}
       </Section>
     </>
   );
