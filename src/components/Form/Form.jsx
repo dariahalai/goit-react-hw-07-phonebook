@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addNewContacts } from 'redux/contactsSlice';
-
+import { addContactsThunk } from 'redux/contacts.thunk';
 import { Label, Input, Button, FormContainer } from './Form.styled';
 
 const Form = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
   const dispatch = useDispatch();
 
   const handleChange = e => {
@@ -16,7 +15,7 @@ const Form = () => {
         setName(value);
         break;
       case 'number':
-        setNumber(value);
+        setPhone(value);
         break;
       default:
         return;
@@ -24,9 +23,9 @@ const Form = () => {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(addNewContacts({ name, number }));
+    dispatch(addContactsThunk({ name, phone }));
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -50,7 +49,7 @@ const Form = () => {
           <Input
             type="tel"
             name="number"
-            value={number}
+            value={phone}
             onChange={handleChange}
             placeholder="Enter number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
